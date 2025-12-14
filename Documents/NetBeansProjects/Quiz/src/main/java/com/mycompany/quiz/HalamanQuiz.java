@@ -70,8 +70,6 @@ public class HalamanQuiz extends javax.swing.JFrame {
         jRadioButtonD = new javax.swing.JRadioButton();
         jLabelSkorRealtime = new javax.swing.JLabel();
         jButtonSelesaiPaksadanKumpul = new javax.swing.JButton();
-        jButtonSoalSelanjutnya = new javax.swing.JButton();
-        jButtonSoalSebelumnya = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabelUntukQuizNamaQuiz = new javax.swing.JLabel();
         jLabelWaktuTersisa = new javax.swing.JLabel();
@@ -138,24 +136,6 @@ public class HalamanQuiz extends javax.swing.JFrame {
             }
         });
 
-        jButtonSoalSelanjutnya.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
-        jButtonSoalSelanjutnya.setForeground(new java.awt.Color(102, 102, 102));
-        jButtonSoalSelanjutnya.setText("Soal Selanjutnya");
-        jButtonSoalSelanjutnya.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSoalSelanjutnyaActionPerformed(evt);
-            }
-        });
-
-        jButtonSoalSebelumnya.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
-        jButtonSoalSebelumnya.setForeground(new java.awt.Color(102, 102, 102));
-        jButtonSoalSebelumnya.setText("Soal Sebelumnya");
-        jButtonSoalSebelumnya.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSoalSebelumnyaActionPerformed(evt);
-            }
-        });
-
         jPanel2.setBackground(new java.awt.Color(102, 204, 255));
 
         jLabelUntukQuizNamaQuiz.setFont(new java.awt.Font("Montserrat", 1, 24)); // NOI18N
@@ -203,11 +183,7 @@ public class HalamanQuiz extends javax.swing.JFrame {
                     .addComponent(jLabelRuangSoal, javax.swing.GroupLayout.PREFERRED_SIZE, 551, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 71, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButtonSoalSebelumnya)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonSoalSelanjutnya)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonSelesaiPaksadanKumpul)
                 .addGap(29, 29, 29))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -243,10 +219,7 @@ public class HalamanQuiz extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addComponent(jLabelSkorRealtime)
                 .addGap(26, 26, 26)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonSoalSebelumnya)
-                    .addComponent(jButtonSoalSelanjutnya)
-                    .addComponent(jButtonSelesaiPaksadanKumpul))
+                .addComponent(jButtonSelesaiPaksadanKumpul)
                 .addGap(32, 32, 32))
         );
 
@@ -264,16 +237,6 @@ public class HalamanQuiz extends javax.swing.JFrame {
     selesaiQuiz();
     }//GEN-LAST:event_jButtonSelesaiPaksadanKumpulActionPerformed
 
-    private void jButtonSoalSelanjutnyaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSoalSelanjutnyaActionPerformed
-        checkJawaban();  // Cek jawaban current dulu
-        currentSoal++;
-        if (currentSoal >= soalList.size()) {
-            selesaiQuiz();
-        } else {
-            tampilSoal();
-        }
-    }//GEN-LAST:event_jButtonSoalSelanjutnyaActionPerformed
-
     private void jRadioButtonBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonBActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButtonBActionPerformed
@@ -285,15 +248,6 @@ public class HalamanQuiz extends javax.swing.JFrame {
     private void jRadioButtonDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonDActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButtonDActionPerformed
-
-    private void jButtonSoalSebelumnyaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSoalSebelumnyaActionPerformed
-    if (currentSoal > 0) {
-            currentSoal--;
-            tampilSoal();
-        } else {
-            JOptionPane.showMessageDialog(null, "Ini sudah soal pertama!");
-    }
-    }//GEN-LAST:event_jButtonSoalSebelumnyaActionPerformed
 
     private String getNamaQuiz() {
         try (Connection con = Koneksi.getConnection()) {
@@ -455,8 +409,6 @@ private void tampilSoal() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButtonSelesaiPaksadanKumpul;
-    private javax.swing.JButton jButtonSoalSebelumnya;
-    private javax.swing.JButton jButtonSoalSelanjutnya;
     private javax.swing.JLabel jLabelPenandaSoalKeBerapaDariKeBerapa;
     private javax.swing.JLabel jLabelRuangSoal;
     private javax.swing.JLabel jLabelSkorRealtime;
