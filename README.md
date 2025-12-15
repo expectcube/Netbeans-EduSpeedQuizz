@@ -73,7 +73,7 @@ Quiz/
 5. Choose file:
 
    ```
-   database/quiz.sql
+   database/eduspeed_quiz (2).sql
    ```
 6. Click **Go**
 
