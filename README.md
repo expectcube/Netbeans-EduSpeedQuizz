@@ -73,7 +73,7 @@ Quiz/
 5. Choose file:
 
    ```
-   database/eduspeed_quiz (2).sql
+   database/eduspeed_quiz.sql
    ```
 6. Click **Go**
 
@@ -86,7 +86,7 @@ Quiz/
 Edit the database connection in `Koneksi.java`:
 
 ```java
-String url = "jdbc:mysql://localhost:3306/quiz";
+String url = "jdbc:mysql://localhost:3306/eduspeed_quiz";
 String user = "root";
 String pass = "";
 ```
