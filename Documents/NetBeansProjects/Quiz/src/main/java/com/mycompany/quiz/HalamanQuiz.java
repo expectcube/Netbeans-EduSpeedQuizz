@@ -233,7 +233,7 @@ public class HalamanQuiz extends javax.swing.JFrame {
     }//GEN-LAST:event_jRadioButtonAActionPerformed
 
     private void jButtonSelesaiPaksadanKumpulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSelesaiPaksadanKumpulActionPerformed
-    checkJawaban();  // Cek terakhir
+    //checkJawaban();  // Cek terakhir
     selesaiQuiz();
     }//GEN-LAST:event_jButtonSelesaiPaksadanKumpulActionPerformed
 
