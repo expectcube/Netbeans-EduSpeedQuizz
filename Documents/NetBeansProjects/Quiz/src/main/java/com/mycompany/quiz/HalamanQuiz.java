@@ -49,7 +49,7 @@ public class HalamanQuiz extends javax.swing.JFrame {
         startTimer();
         addJawabListener();
     }
-
+    private int jumlahBenar = 0;  // Counter jawaban benar
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -124,7 +124,7 @@ public class HalamanQuiz extends javax.swing.JFrame {
 
         jLabelSkorRealtime.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
         jLabelSkorRealtime.setForeground(new java.awt.Color(102, 102, 102));
-        jLabelSkorRealtime.setText("Skor saat ini: ");
+        jLabelSkorRealtime.setText("Benar:");
 
         jButtonSelesaiPaksadanKumpul.setBackground(new java.awt.Color(255, 102, 102));
         jButtonSelesaiPaksadanKumpul.setFont(new java.awt.Font("Montserrat", 1, 14)); // NOI18N
@@ -327,16 +327,17 @@ private void tampilSoal() {
     }
 
     private void checkJawaban() {
-        char selected = ' ';
-        if (jRadioButtonA.isSelected()) selected = 'A';
-        else if (jRadioButtonB.isSelected()) selected = 'B';
-        else if (jRadioButtonC.isSelected()) selected = 'C';
-        else if (jRadioButtonD.isSelected()) selected = 'D';
+    char selected = ' ';
+    if (jRadioButtonA.isSelected()) selected = 'A';
+    else if (jRadioButtonB.isSelected()) selected = 'B';
+    else if (jRadioButtonC.isSelected()) selected = 'C';
+    else if (jRadioButtonD.isSelected()) selected = 'D';
 
-        if (selected == soalList.get(currentSoal).getJawabanBenar()) {
-            skor += 100 / soalList.size(); // Skor proporsional
-        }
-        jLabelSkorRealtime.setText("Skor saat ini: " + skor);
+    if (selected != ' ' && selected == soalList.get(currentSoal).getJawabanBenar()) {
+        jumlahBenar++;  // Hanya tambah counter
+    }
+    // Update label realtime (opsional: tampilkan jumlah benar sementara)
+    jLabelSkorRealtime.setText("Benar: " + jumlahBenar + " / " + soalList.size());
     }
 
     private void startTimer() {
@@ -355,23 +356,33 @@ private void tampilSoal() {
     }
 
     private void selesaiQuiz() {
-        timer.stop();
-        JOptionPane.showMessageDialog(this, "Quiz Selesai! Skor: " + skor);
-        simpanHasil();
-        this.dispose();
+    timer.stop();
+
+    // Hitung skor akhir proporsional & bulatkan ke bawah (paling adil)
+    double persentase = (double) jumlahBenar / soalList.size();
+    skor = (int) Math.floor(persentase * 100);  // Atau Math.round() kalau mau bulat terdekat
+
+    JOptionPane.showMessageDialog(this, 
+        "Quiz Selesai!\n" +
+        "Jawaban Benar: " + jumlahBenar + " dari " + soalList.size() + "\n" +
+        "Skor Akhir: " + skor + " / 100", 
+        "Hasil Quiz", JOptionPane.INFORMATION_MESSAGE);
+
+    simpanHasil();  // Simpan skor ke DB
+    this.dispose();
     }
 
     private void simpanHasil() {
-        try (Connection con = Koneksi.getConnection()) {
-            String query = "INSERT INTO tbl_hasil (mahasiswa_id, quiz_id, skor) VALUES (?, ?, ?)";
-            PreparedStatement pst = con.prepareStatement(query);
-            pst.setInt(1, mahaId);
-            pst.setInt(2, quizId);
-            pst.setInt(3, skor);
-            pst.executeUpdate();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error simpan skor: " + ex.getMessage());
-        }
+    try (Connection con = Koneksi.getConnection()) {
+        String query = "INSERT INTO tbl_hasil (mahasiswa_id, quiz_id, skor) VALUES (?, ?, ?)";
+        PreparedStatement pst = con.prepareStatement(query);
+        pst.setInt(1, mahaId);
+        pst.setInt(2, quizId);
+        pst.setInt(3, skor);  // Skor akhir yang sudah proporsional
+        pst.executeUpdate();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error simpan skor: " + ex.getMessage());
+    }
     }
 
     private String formatWaktu(int detik) {
