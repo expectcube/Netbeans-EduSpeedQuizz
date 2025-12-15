@@ -67,7 +67,7 @@ Quiz/
 ### 1️⃣ Import Database
 
 1. Open **phpMyAdmin**
-2. Create a database (example: `quiz`)
+2. Create a database (example: `eduspeed_quiz`)
 3. Select the database
 4. Click **Import**
 5. Choose file:
